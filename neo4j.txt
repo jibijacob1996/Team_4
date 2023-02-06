@@ -1,0 +1,25 @@
+Neo4j queries
+
+#Loading CSV 
+load csv with headers from "file:///California.csv" as row
+return row
+load csv with headers from "file:///California.csv" as row 
+fieldterminator ","
+
+#Creating nodes and relations
+merge(IR:medianIncome{name:row.`median_income range`})
+merge(HV:houseValue{name:row.`median_house_value range`})
+merge(BR:bedRooms{name:row.`total_bedrooms range`})
+merge(PR:population{name:row.`population range`})
+merge(HH:household{name:row.`households range`})
+merge(HA:houseAge{name:row.`housing_median_age range`})
+merge(IR)-[r:LIVES]->(HV)
+merge(HA)-[r1:HAS]->(BR)
+merge(PR)-[r2:HAS]->(HH)
+
+#Displaying graph
+MATCH (n)return n
+
+#Deleting nodes
+MATCH (n)
+DETACH DELETE n
